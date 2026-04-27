@@ -1,1 +1,839 @@
-<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>The Evolution of the Atomic Model</title>\n    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">\n    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>\n    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>\n</head>\n<body class="bg-gray-100">\n    <header class="p-6 bg-blue-600 text-white text-center">\n        <h1 class="text-3xl font-bold">The Evolution of the Atomic Model</h1>\n    </header>\n    <main class="p-4">\n        <section id="timeline" class="mt-8">\n            <h2 class="text-2xl font-semibold mb-4">Timeline of Atomic Models</h2>\n            <div class="border-l-2 border-blue-600 pl-4">\n                <div class="my-4">\n                    <div class="flex items-center">\n                        <div class="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center">1</div>\n                        <div class="ml-4">\n                            <h3 class="font-bold">Dalton's Atomic Theory (1808)</h3>\n                            <p>Introduction of the atomic theory, proposing atoms as indivisible particles.</p>\n                        </div>\n                    </div>\n                </div>\n                <div class="my-4">\n                    <div class="flex items-center">\n                        <div class="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center">2</div>\n                        <div class="ml-4">\n                            <h3 class="font-bold">Thomson's Plum Pudding Model (1897)</h3>\n                            <p>Introduction of electrons within a positively charged sphere.</p>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </section>\n        <section id="comics" class="mt-8">\n            <h2 class="text-2xl font-semibold mb-4">Comic Panels</h2>\n            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">\n                <div class="bg-white p-4 shadow rounded">\n                    <h3 class="font-bold">Comic 1</h3>\n                    <img src="comic1.png" alt="Comic 1" class="w-full">\n                </div>\n                <div class="bg-white p-4 shadow rounded">\n                    <h3 class="font-bold">Comic 2</h3>\n                    <img src="comic2.png" alt="Comic 2" class="w-full">\n                </div>\n            </div>\n        </section>\n        <section id="3d-model" class="mt-8">\n            <h2 class="text-2xl font-semibold mb-4">3D Atomic Model</h2>\n            <div id="3d-model-canvas" class="w-full h-64 bg-gray-200"></div>\n        </section>\n    </main>\n    <script>\n        // Initialize particles.js for animated particles\n        particlesJS.load('particles-js', 'particles.json', function() {\n            console.log('callback - particles.js config loaded');\n        });\n        // Three.js scene setup\n        function init() {\n            const scene = new THREE.Scene();\n            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);\n            const renderer = new THREE.WebGLRenderer();\n            renderer.setSize(window.innerWidth, window.innerHeight);\n            document.getElementById('3d-model-canvas').appendChild(renderer.domElement);\n            // 3D model code goes here...\n            camera.position.z = 5;\n            const animate = function () {\n                requestAnimationFrame(animate);\n                // Animation code goes here...\n                renderer.render(scene, camera);\n            };\n            animate();\n        }\n        init();\n    </script>\n</body>\n</html>\n
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Evolution of the Atomic Model</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #ec4899;
+            --accent: #06b6d4;
+            --dalton: #8B4513;
+            --thomson: #D2691E;
+            --rutherford: #C41E3A;
+            --bohr: #1E90FF;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        .font-space { font-family: 'Space Grotesk', sans-serif; }
+
+        /* Particle Background */
+        .particles {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .particle {
+            position: absolute;
+            width: 4px; height: 4px;
+            background: rgba(99, 102, 241, 0.6);
+            border-radius: 50%;
+            animation: float 15s infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute; inset: 0;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(236, 72, 153, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 100%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+        }
+
+        /* Atom Animation */
+        .atom-container {
+            position: relative;
+            width: 300px; height: 300px;
+            perspective: 1000px;
+        }
+        .atom {
+            position: absolute; inset: 0;
+            transform-style: preserve-3d;
+            animation: rotate 20s linear infinite;
+        }
+        @keyframes rotate {
+            from { transform: rotateY(0deg) rotateX(10deg); }
+            to { transform: rotateY(360deg) rotateX(10deg); }
+        }
+        .orbit {
+            position: absolute; inset: 0;
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            border-radius: 50%;
+            transform-style: preserve-3d;
+        }
+        .orbit:nth-child(1) { transform: rotateY(0deg); }
+        .orbit:nth-child(2) { transform: rotateY(60deg); }
+        .orbit:nth-child(3) { transform: rotateY(120deg); }
+        .electron {
+            position: absolute;
+            width: 12px; height: 12px;
+            background: linear-gradient(135deg, #06b6d4, #6366f1);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.8);
+            animation: electron-move 3s linear infinite;
+        }
+        @keyframes electron-move {
+            0% { transform: rotate(0deg) translateX(120px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(120px) rotate(-360deg); }
+        }
+        .nucleus {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px; height: 40px;
+            background: radial-gradient(circle, #ec4899, #be185d);
+            border-radius: 50%;
+            box-shadow: 0 0 40px rgba(236, 72, 153, 0.6);
+        }
+
+        /* Timeline */
+        .timeline-container { position: relative; padding: 4rem 0; }
+        .timeline-line {
+            position: absolute;
+            left: 50%; top: 0; bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--dalton), var(--thomson), var(--rutherford), var(--bohr));
+            transform: translateX(-50%);
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 6rem;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .timeline-dot {
+            position: absolute;
+            left: 50%; top: 2rem;
+            width: 24px; height: 24px;
+            background: #f8fafc;
+            border: 4px solid var(--primary);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+        }
+        .timeline-content {
+            width: 45%;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+        }
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(99, 102, 241, 0.5);
+        }
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: auto;
+        }
+
+        /* Model Cards */
+        .model-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .model-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Comic */
+        .comic-panel {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .comic-panel::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary), var(--accent));
+        }
+        .comic-panel:hover {
+            transform: translateY(-5px) rotate(1deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        .speech-bubble {
+            position: relative;
+            background: #f1f5f9;
+            border-radius: 1rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -10px; left: 30px;
+            width: 0; height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #f1f5f9;
+        }
+
+        /* 3D Canvas */
+        #three-container {
+            width: 100%;
+            height: 500px;
+            position: relative;
+            border-radius: 1rem;
+            overflow: hidden;
+            background: #0f172a;
+        }
+        .model-controls {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            z-index: 100;
+        }
+        .model-btn {
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 2rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+        }
+        .model-btn:hover, .model-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .timeline-line { left: 2rem; }
+            .timeline-dot { left: 2rem; }
+            .timeline-content {
+                width: calc(100% - 4rem);
+                margin-left: 4rem !important;
+            }
+            .atom-container { width: 250px; height: 250px; }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--secondary); }
+    </style>
+</head>
+<body>
+    <!-- Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Nav -->
+    <nav class="fixed top-0 w-full z-50 bg-slate-900/80 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-pink-500 rounded-full flex items-center justify-center">
+                    <span class="text-white font-bold text-lg">⚛</span>
+                </div>
+                <span class="font-space text-xl font-bold text-white">AtomicEvolution</span>
+            </div>
+            <div class="hidden md:flex gap-8 text-sm">
+                <a href="#timeline" class="text-slate-300 hover:text-white transition-colors">Timeline</a>
+                <a href="#models" class="text-slate-300 hover:text-white transition-colors">3D Models</a>
+                <a href="#comic" class="text-slate-300 hover:text-white transition-colors">Comic</a>
+                <a href="#compare" class="text-slate-300 hover:text-white transition-colors">Compare</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="relative z-10 text-center px-6">
+            <div class="atom-container mx-auto mb-12">
+                <div class="atom">
+                    <div class="orbit"><div class="electron" style="animation-delay: 0s;"></div></div>
+                    <div class="orbit"><div class="electron" style="animation-delay: -1s;"></div></div>
+                    <div class="orbit"><div class="electron" style="animation-delay: -2s;"></div></div>
+                    <div class="nucleus"></div>
+                </div>
+            </div>
+            <h1 class="font-space text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                The Evolution of<br>the Atomic Model
+            </h1>
+            <p class="text-xl text-slate-300 max-w-2xl mx-auto mb-8">
+                Journey through 200+ years of scientific discovery, from solid spheres to quantum mysteries!
+            </p>
+            <div class="flex gap-4 justify-center">
+                <a href="#timeline" class="px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full text-white font-semibold hover:shadow-lg transition-all transform hover:-translate-y-1">
+                    Start Exploring
+                </a>
+                <a href="#models" class="px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white font-semibold hover:bg-white/20 transition-all">
+                    View 3D Models
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline -->
+    <section id="timeline" class="py-24 relative">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-indigo-400 text-sm font-semibold tracking-widest uppercase">Timeline</span>
+                <h2 class="font-space text-4xl md:text-5xl font-bold mt-4 text-white">The Atomic Journey</h2>
+            </div>
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+
+                <!-- Dalton -->
+                <div class="timeline-item">
+                    <div class="timeline-dot" style="border-color: var(--dalton);"></div>
+                    <div class="timeline-content">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-16 h-16 bg-amber-900/50 rounded-full flex items-center justify-center border-2 border-amber-600">
+                                <span class="text-2xl">🏐</span>
+                            </div>
+                            <div>
+                                <span class="text-amber-400 text-sm font-semibold">1803</span>
+                                <h3 class="font-space text-2xl font-bold text-white">John Dalton</h3>
+                            </div>
+                        </div>
+                        <div class="w-full h-48 bg-gradient-to-br from-amber-900/30 to-amber-800/10 rounded-lg flex items-center justify-center mb-4 border border-amber-700/30">
+                            <div class="w-24 h-24 bg-amber-700 rounded-full shadow-lg"></div>
+                        </div>
+                        <div class="space-y-3 text-slate-300">
+                            <p><strong class="text-white">Model:</strong> Solid, indivisible sphere - like billiard balls!</p>
+                            <p><strong class="text-white">Discovery:</strong> Each element has its own type of atom.</p>
+                            <div class="bg-red-900/20 border border-red-700/30 rounded-lg p-3">
+                                <p class="text-red-400 text-sm"><strong>Limitation:</strong> Didn't know about subatomic particles!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Thomson -->
+                <div class="timeline-item">
+                    <div class="timeline-dot" style="border-color: var(--thomson);"></div>
+                    <div class="timeline-content">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-16 h-16 bg-orange-900/50 rounded-full flex items-center justify-center border-2 border-orange-500">
+                                <span class="text-2xl">🍮</span>
+                            </div>
+                            <div>
+                                <span class="text-orange-400 text-sm font-semibold">1897</span>
+                                <h3 class="font-space text-2xl font-bold text-white">J.J. Thomson</h3>
+                            </div>
+                        </div>
+                        <div class="w-full h-48 bg-gradient-to-br from-orange-900/30 to-orange-800/10 rounded-lg flex items-center justify-center mb-4 border border-orange-700/30">
+                            <div class="w-28 h-28 bg-orange-700/50 rounded-full relative">
+                                <div class="absolute top-4 left-6 w-3 h-3 bg-cyan-400 rounded-full"></div>
+                                <div class="absolute bottom-6 right-8 w-3 h-3 bg-cyan-400 rounded-full"></div>
+                                <div class="absolute top-1/2 left-1/2 w-3 h-3 bg-cyan-400 rounded-full transform -translate-x-1/2 -translate-y-1/2"></div>
+                            </div>
+                        </div>
+                        <div class="space-y-3 text-slate-300">
+                            <p><strong class="text-white">Model:</strong> Plum pudding - positive sphere with embedded electrons!</p>
+                            <p><strong class="text-white">Discovery:</strong> Discovered the electron using cathode ray tubes.</p>
+                            <div class="bg-red-900/20 border border-red-700/30 rounded-lg p-3">
+                                <p class="text-red-400 text-sm"><strong>Limitation:</strong> No nucleus - couldn't explain gold foil experiment!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rutherford -->
+                <div class="timeline-item">
+                    <div class="timeline-dot" style="border-color: var(--rutherford);"></div>
+                    <div class="timeline-content">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-16 h-16 bg-red-900/50 rounded-full flex items-center justify-center border-2 border-red-500">
+                                <span class="text-2xl">🎯</span>
+                            </div>
+                            <div>
+                                <span class="text-red-400 text-sm font-semibold">1911</span>
+                                <h3 class="font-space text-2xl font-bold text-white">Ernest Rutherford</h3>
+                            </div>
+                        </div>
+                        <div class="w-full h-48 bg-gradient-to-br from-red-900/30 to-red-800/10 rounded-lg flex items-center justify-center mb-4 border border-red-700/30">
+                            <div class="relative w-32 h-32">
+                                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-red-500 rounded-full shadow-lg"></div>
+                                <div class="absolute top-2 left-8 w-2 h-2 bg-cyan-400 rounded-full"></div>
+                                <div class="absolute bottom-4 right-6 w-2 h-2 bg-cyan-400 rounded-full"></div>
+                                <div class="absolute top-1/3 right-2 w-2 h-2 bg-cyan-400 rounded-full"></div>
+                            </div>
+                        </div>
+                        <div class="space-y-3 text-slate-300">
+                            <p><strong class="text-white">Model:</strong> Dense nucleus with electrons orbiting - mostly empty space!</p>
+                            <p><strong class="text-white">Discovery:</strong> Gold foil experiment revealed the nucleus.</p>
+                            <div class="bg-red-900/20 border border-red-700/30 rounded-lg p-3">
+                                <p class="text-red-400 text-sm"><strong>Limitation:</strong> Electrons should spiral into nucleus!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bohr -->
+                <div class="timeline-item">
+                    <div class="timeline-dot" style="border-color: var(--bohr);"></div>
+                    <div class="timeline-content">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-16 h-16 bg-blue-900/50 rounded-full flex items-center justify-center border-2 border-blue-500">
+                                <span class="text-2xl">🪐</span>
+                            </div>
+                            <div>
+                                <span class="text-blue-400 text-sm font-semibold">1913</span>
+                                <h3 class="font-space text-2xl font-bold text-white">Niels Bohr</h3>
+                            </div>
+                        </div>
+                        <div class="w-full h-48 bg-gradient-to-br from-blue-900/30 to-blue-800/10 rounded-lg flex items-center justify-center mb-4 border border-blue-700/30">
+                            <div class="relative w-32 h-32">
+                                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-red-500 rounded-full shadow-lg"></div>
+                                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 border-2 border-blue-400 rounded-full"></div>
+                                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-24 h-24 border-2 border-blue-300 rounded-full"></div>
+                                <div class="absolute top-1 left-1/2 w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
+                                <div class="absolute bottom-2 right-3 w-2 h-2 bg-cyan-400 rounded-full animate-pulse" style="animation-delay: 0.5s;"></div>
+                            </div>
+                        </div>
+                        <div class="space-y-3 text-slate-300">
+                            <p><strong class="text-white">Model:</strong> Electrons in fixed energy levels - like planets!</p>
+                            <p><strong class="text-white">Discovery:</strong> Quantized energy levels explain spectral lines.</p>
+                            <div class="bg-red-900/20 border border-red-700/30 rounded-lg p-3">
+                                <p class="text-red-400 text-sm"><strong>Limitation:</strong> Only works for hydrogen atom!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3D Models -->
+    <section id="models" class="py-24 bg-slate-900/50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <span class="text-cyan-400 text-sm font-semibold tracking-widest uppercase">Interactive 3D</span>
+                <h2 class="font-space text-4xl md:text-5xl font-bold mt-4 text-white">Explore the Models</h2>
+                <p class="text-slate-400 mt-4">Click buttons to switch between models!</p>
+            </div>
+            <div class="relative">
+                <div id="three-container"></div>
+                <div class="model-controls">
+                    <button class="model-btn active" onclick="switchModel('dalton')">Dalton</button>
+                    <button class="model-btn" onclick="switchModel('thomson')">Thomson</button>
+                    <button class="model-btn" onclick="switchModel('rutherford')">Rutherford</button>
+                    <button class="model-btn" onclick="switchModel('bohr')">Bohr</button>
+                </div>
+            </div>
+            <div class="mt-8 grid md:grid-cols-2 gap-6">
+                <div class="bg-white/5 backdrop-blur-md rounded-xl p-6 border border-white/10">
+                    <h3 class="font-space text-xl font-bold text-white mb-3">Current Model: <span id="current-model-name" class="text-cyan-400">Dalton's Solid Sphere</span></h3>
+                    <p id="current-model-desc" class="text-slate-300">A simple, indivisible solid sphere representing the atom.</p>
+                </div>
+                <div class="bg-white/5 backdrop-blur-md rounded-xl p-6 border border-white/10">
+                    <h3 class="font-space text-xl font-bold text-white mb-3">Key Features</h3>
+                    <ul id="current-model-features" class="space-y-2 text-slate-300">
+                        <li class="flex items-center gap-2"><span class="text-cyan-400">●</span>Solid, indivisible sphere</li>
+                        <li class="flex items-center gap-2"><span class="text-cyan-400">●</span>No subatomic particles</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comic -->
+    <section id="comic" class="py-24">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-pink-400 text-sm font-semibold tracking-widest uppercase">Fun Learning</span>
+                <h2 class="font-space text-4xl md:text-5xl font-bold mt-4 text-white">The Atom Comic</h2>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="comic-panel">
+                    <div class="speech-bubble">
+                        <p class="text-slate-700 text-sm font-medium">"Atoms are like tiny billiard balls - solid and indivisible!"</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-amber-700 rounded-full flex items-center justify-center text-white font-bold">D</div>
+                        <div><p class="font-bold text-slate-800">Dalton</p><p class="text-xs text-slate-500">1803</p></div>
+                    </div>
+                    <div class="mt-4 flex justify-center"><div class="w-16 h-16 bg-amber-600 rounded-full shadow-lg"></div></div>
+                </div>
+                <div class="comic-panel">
+                    <div class="speech-bubble">
+                        <p class="text-slate-700 text-sm font-medium">"Wait! I found electrons! Like plums in a pudding!"</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-orange-600 rounded-full flex items-center justify-center text-white font-bold">T</div>
+                        <div><p class="font-bold text-slate-800">Thomson</p><p class="text-xs text-slate-500">1897</p></div>
+                    </div>
+                    <div class="mt-4 flex justify-center">
+                        <div class="w-16 h-16 bg-orange-400 rounded-full relative">
+                            <div class="absolute top-2 left-3 w-2 h-2 bg-cyan-500 rounded-full"></div>
+                            <div class="absolute bottom-3 right-3 w-2 h-2 bg-cyan-500 rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="comic-panel">
+                    <div class="speech-bubble">
+                        <p class="text-slate-700 text-sm font-medium">"There's a dense nucleus! Mostly empty space!"</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center text-white font-bold">R</div>
+                        <div><p class="font-bold text-slate-800">Rutherford</p><p class="text-xs text-slate-500">1911</p></div>
+                    </div>
+                    <div class="mt-4 flex justify-center">
+                        <div class="relative w-16 h-16">
+                            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-red-500 rounded-full"></div>
+                            <div class="absolute top-2 left-4 w-1.5 h-1.5 bg-cyan-400 rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="comic-panel">
+                    <div class="speech-bubble">
+                        <p class="text-slate-700 text-sm font-medium">"Electrons orbit in specific energy levels!"</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">B</div>
+                        <div><p class="font-bold text-slate-800">Bohr</p><p class="text-xs text-slate-500">1913</p></div>
+                    </div>
+                    <div class="mt-4 flex justify-center">
+                        <div class="relative w-16 h-16">
+                            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-red-500 rounded-full"></div>
+                            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 border-2 border-blue-400 rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Compare -->
+    <section id="compare" class="py-24 bg-slate-900/50">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-indigo-400 text-sm font-semibold tracking-widest uppercase">Compare</span>
+                <h2 class="font-space text-4xl md:text-5xl font-bold mt-4 text-white">Before vs After</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="model-card">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-amber-700 rounded-full mx-auto mb-2"></div>
+                            <p class="text-amber-400 text-sm">Dalton</p>
+                        </div>
+                        <div class="text-2xl text-white">→</div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-orange-600 rounded-full mx-auto mb-2 relative">
+                                <div class="absolute top-2 left-3 w-2 h-2 bg-cyan-400 rounded-full"></div>
+                            </div>
+                            <p class="text-orange-400 text-sm">Thomson</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 text-sm"><strong class="text-green-400">Fix:</strong> Discovered electrons - atoms have internal structure!</p>
+                </div>
+                <div class="model-card">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-orange-600 rounded-full mx-auto mb-2 relative">
+                                <div class="absolute top-2 left-3 w-2 h-2 bg-cyan-400 rounded-full"></div>
+                            </div>
+                            <p class="text-orange-400 text-sm">Thomson</p>
+                        </div>
+                        <div class="text-2xl text-white">→</div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-red-600 rounded-full mx-auto mb-2 relative">
+                                <div class="absolute top-1/2 left-1/2 w-3 h-3 bg-red-400 rounded-full transform -translate-x-1/2 -translate-y-1/2"></div>
+                            </div>
+                            <p class="text-red-400 text-sm">Rutherford</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 text-sm"><strong class="text-green-400">Fix:</strong> Discovered nucleus - mostly empty space!</p>
+                </div>
+                <div class="model-card">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-red-600 rounded-full mx-auto mb-2 relative">
+                                <div class="absolute top-1/2 left-1/2 w-3 h-3 bg-red-400 rounded-full transform -translate-x-1/2 -translate-y-1/2"></div>
+                            </div>
+                            <p class="text-red-400 text-sm">Rutherford</p>
+                        </div>
+                        <div class="text-2xl text-white">→</div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-blue-600 rounded-full mx-auto mb-2 relative">
+                                <div class="absolute top-1/2 left-1/2 w-2 h-2 bg-red-400 rounded-full transform -translate-x-1/2 -translate-y-1/2"></div>
+                                <div class="absolute top-1/2 left-1/2 w-8 h-8 border border-blue-400 rounded-full transform -translate-x-1/2 -translate-y-1/2"></div>
+                            </div>
+                            <p class="text-blue-400 text-sm">Bohr</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 text-sm"><strong class="text-green-400">Fix:</strong> Fixed energy levels - electrons don't crash!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-white/10 py-12">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <div class="flex items-center justify-center gap-3 mb-4">
+                <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-pink-500 rounded-full flex items-center justify-center">
+                    <span class="text-white font-bold text-lg">⚛</span>
+                </div>
+                <span class="font-space text-xl font-bold text-white">AtomicEvolution</span>
+            </div>
+            <p class="text-slate-500 text-sm">Year 9 Science - The Evolution of the Atomic Model</p>
+        </div>
+    </footer>
+
+    <script>
+        // Particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // Scroll Animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.timeline-item').forEach(el => observer.observe(el));
+
+        // Three.js
+        let scene, camera, renderer, controls, currentModel;
+        let animationId;
+
+        function initThree() {
+            const container = document.getElementById('three-container');
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x0f172a);
+
+            camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.z = 5;
+
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
+
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.autoRotate = true;
+            controls.autoRotateSpeed = 1;
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(5, 5, 5);
+            scene.add(directionalLight);
+
+            createDaltonModel();
+            animate();
+        }
+
+        function clearScene() {
+            while(scene.children.length > 0) {
+                const object = scene.children[0];
+                if (object.geometry) object.geometry.dispose();
+                if (object.material) {
+                    if (Array.isArray(object.material)) object.material.forEach(m => m.dispose());
+                    else object.material.dispose();
+                }
+                scene.remove(object);
+            }
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(5, 5, 5);
+            scene.add(directionalLight);
+        }
+
+        function createDaltonModel() {
+            clearScene();
+            const geometry = new THREE.SphereGeometry(1.5, 32, 32);
+            const material = new THREE.MeshPhongMaterial({ color: 0x92400e, shininess: 100 });
+            const sphere = new THREE.Mesh(geometry, material);
+            scene.add(sphere);
+            currentModel = sphere;
+            updateInfo('dalton');
+        }
+
+        function createThomsonModel() {
+            clearScene();
+            const sphereGeo = new THREE.SphereGeometry(1.5, 32, 32);
+            const sphereMat = new THREE.MeshPhongMaterial({ color: 0xdb2777, transparent: true, opacity: 0.8 });
+            const sphere = new THREE.Mesh(sphereGeo, sphereMat);
+            scene.add(sphere);
+
+            const electronGeo = new THREE.SphereGeometry(0.15, 16, 16);
+            const electronMat = new THREE.MeshPhongMaterial({ color: 0x06b6d4, emissive: 0x06b6d4, emissiveIntensity: 0.5 });
+            [[0.5,0.5,0.5], [-0.5,-0.5,0.5], [0.5,-0.5,-0.5], [-0.5,0.5,-0.5]].forEach(pos => {
+                const electron = new THREE.Mesh(electronGeo, electronMat);
+                electron.position.set(...pos);
+                scene.add(electron);
+            });
+            currentModel = sphere;
+            updateInfo('thomson');
+        }
+
+        function createRutherfordModel() {
+            clearScene();
+            const nucleusGeo = new THREE.SphereGeometry(0.3, 32, 32);
+            const nucleusMat = new THREE.MeshPhongMaterial({ color: 0xef4444, emissive: 0xef4444, emissiveIntensity: 0.3 });
+            const nucleus = new THREE.Mesh(nucleusGeo, nucleusMat);
+            scene.add(nucleus);
+
+            const electronGeo = new THREE.SphereGeometry(0.1, 16, 16);
+            const electronMat = new THREE.MeshPhongMaterial({ color: 0x06b6d4, emissive: 0x06b6d4, emissiveIntensity: 0.5 });
+            const electrons = [];
+            [[2,0,0], [-1.5,1.5,0], [0,-2,0], [1,1,1.5]].forEach(pos => {
+                const electron = new THREE.Mesh(electronGeo, electronMat);
+                electron.position.set(...pos);
+                scene.add(electron);
+                electrons.push(electron);
+            });
+            currentModel = { nucleus, electrons };
+            updateInfo('rutherford');
+        }
+
+        function createBohrModel() {
+            clearScene();
+            const nucleusGeo = new THREE.SphereGeometry(0.25, 32, 32);
+            const nucleusMat = new THREE.MeshPhongMaterial({ color: 0xef4444, emissive: 0xef4444, emissiveIntensity: 0.3 });
+            const nucleus = new THREE.Mesh(nucleusGeo, nucleusMat);
+            scene.add(nucleus);
+
+            const orbitMat = new THREE.LineBasicMaterial({ color: 0x06b6d4, transparent: true, opacity: 0.5 });
+            [1, 1.6, 2.2].forEach(radius => {
+                const orbitGeo = new THREE.RingGeometry(radius - 0.02, radius + 0.02, 64);
+                const orbit = new THREE.Mesh(orbitGeo, orbitMat);
+                orbit.rotation.x = Math.PI / 2;
+                scene.add(orbit);
+            });
+
+            const electronGeo = new THREE.SphereGeometry(0.08, 16, 16);
+            const electronMat = new THREE.MeshPhongMaterial({ color: 0x06b6d4, emissive: 0x06b6d4, emissiveIntensity: 0.5 });
+            const electrons = [];
+            [{r:1,a:0,s:2}, {r:1.6,a:2,s:1.5}, {r:2.2,a:4,s:1}].forEach(data => {
+                const electron = new THREE.Mesh(electronGeo, electronMat);
+                electron.position.set(Math.cos(data.a)*data.r, 0, Math.sin(data.a)*data.r);
+                scene.add(electron);
+                electrons.push({ mesh: electron, ...data });
+            });
+            currentModel = { nucleus, electrons };
+            updateInfo('bohr');
+        }
+
+        function animate() {
+            animationId = requestAnimationFrame(animate);
+            const time = Date.now() * 0.001;
+
+            if (currentModel && currentModel.electrons) {
+                if (!currentModel.orbits) {
+                    currentModel.electrons.forEach((electron, i) => {
+                        electron.position.x = Math.cos(time*(0.5+i*0.2))*(1.5+i*0.5);
+                        electron.position.y = Math.sin(time*(0.3+i*0.2))*(1+i*0.3);
+                        electron.position.z = Math.sin(time*(0.4+i*0.2))*(1+i*0.3);
+                    });
+                } else {
+                    currentModel.electrons.forEach(e => {
+                        e.a += e.s * 0.01;
+                        e.mesh.position.x = Math.cos(e.a)*e.r;
+                        e.mesh.position.z = Math.sin(e.a)*e.r;
+                    });
+                }
+            }
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        function switchModel(model) {
+            document.querySelectorAll('.model-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            switch(model) {
+                case 'dalton': createDaltonModel(); break;
+                case 'thomson': createThomsonModel(); break;
+                case 'rutherford': createRutherfordModel(); break;
+                case 'bohr': createBohrModel(); break;
+            }
+        }
+
+        function updateInfo(model) {
+            const info = {
+                dalton: { name: "Dalton's Solid Sphere", desc: "A simple, indivisible solid sphere.", features: ["Solid, indivisible sphere", "No subatomic particles"] },
+                thomson: { name: "Thomson's Plum Pudding", desc: "Positive sphere with embedded electrons.", features: ["Positive 'pudding' sphere", "Negative electrons embedded"] },
+                rutherford: { name: "Rutherford's Nuclear Model", desc: "Dense nucleus with orbiting electrons.", features: ["Dense central nucleus", "Mostly empty space"] },
+                bohr: { name: "Bohr's Planetary Model", desc: "Electrons in fixed energy levels.", features: ["Fixed energy levels", "Quantized orbits"] }
+            };
+            document.getElementById('current-model-name').textContent = info[model].name;
+            document.getElementById('current-model-desc').textContent = info[model].desc;
+            document.getElementById('current-model-features').innerHTML = info[model].features.map(f => 
+                `<li class="flex items-center gap-2"><span class="text-cyan-400">●</span>${f}</li>`).join('');
+        }
+
+        window.addEventListener('resize', () => {
+            if (camera && renderer) {
+                const container = document.getElementById('three-container');
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            }
+        });
+
+        window.addEventListener('load', initThree);
+    </script>
+</body>
+</html>
